@@ -12,54 +12,32 @@ import {
 
 export default function Sidebar() {
   return (
-    <aside className="w-64 h-screen bg-slate-900 border-r border-slate-800 flex flex-col">
+    <aside className="w-72 h-full shrink-0 bg-slate-900 border-r border-slate-800 flex flex-col">
       {/* Logo */}
-      <div className="px-6 py-6 border-b border-slate-800">
-        <h1 className="text-xl font-bold text-white">ViralGen AI</h1>
+      <div className="px-6 py-7 border-b border-slate-800">
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-600 to-violet-500 flex items-center justify-center shadow-lg">
+            <span className="text-white text-xl font-bold">V</span>
+          </div>
 
-        <p className="text-sm text-slate-400 mt-1">Marketing Studio</p>
+          <div>
+            <h1 className="text-xl font-bold tracking-tight text-white">
+              ViralGen AI
+            </h1>
+
+            <p className="text-sm text-slate-400">Marketing Studio</p>
+          </div>
+        </div>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 px-4 py-6 space-y-2">
+      <nav className="flex-1 px-4 py-4 space-y-2">
         <Link
           href="/dashboard"
-          className="flex items-center gap-3 px-4 py-3 rounded-lg bg-purple-600/20 text-purple-400"
+          className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-purple-600 to-violet-600 text-white py-3 font-medium shadow-lg hover:shadow-purple-600/30 transition-all duration-300"
         >
           <Plus size={18} />
           New Campaign
-        </Link>
-
-        <Link
-          href="/history"
-          className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800"
-        >
-          <History size={18} />
-          Campaign History
-        </Link>
-
-        <Link
-          href="/personas"
-          className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800"
-        >
-          <Palette size={18} />
-          Personas
-        </Link>
-
-        <Link
-          href="/analytics"
-          className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800"
-        >
-          <BarChart3 size={18} />
-          Analytics
-        </Link>
-
-        <Link
-          href="/settings"
-          className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800"
-        >
-          <Settings size={18} />
-          Settings
         </Link>
       </nav>
 
