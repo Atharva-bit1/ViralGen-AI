@@ -43,7 +43,18 @@ export function Navbar() {
   if (!mounted) return null;
 
   return (
-    <header className="flex h-16 items-center justify-end border-b border-slate-800 bg-slate-950 px-6">
+    <header
+      className=" h-16
+  border-b
+  border-slate-800
+  bg-slate-900
+  px-6
+  flex
+  items-center
+  justify-end
+  transition-all
+  duration-300"
+    >
       <div className="flex items-center gap-3">
         {/* Theme Toggle */}
 
