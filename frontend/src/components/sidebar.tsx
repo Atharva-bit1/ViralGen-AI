@@ -7,25 +7,43 @@ import {
   Palette,
   BarChart3,
   Settings,
+  Search,
   Plus,
+  Menu,
 } from "lucide-react";
+import { useState } from "react";
 
 export default function Sidebar() {
+  const [collapsed, setCollapsed] = useState(false);
   return (
-    <aside className="w-72 h-full shrink-0 bg-slate-900 border-r border-slate-800 flex flex-col">
-      {/* Logo */}
-      <div className="px-6 py-7 border-b border-slate-800">
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-600 to-violet-500 flex items-center justify-center shadow-lg">
-            <span className="text-white text-xl font-bold">V</span>
-          </div>
+    <aside
+      className={`${
+        collapsed ? "w-20" : "w-72"
+      } h-full shrink-0 border-r border-slate-800 bg-slate-900 transition-all duration-300 flex flex-col`}
+    >
+      {/* Header */}
+      {/* Sidebar Header */}
 
-          <div>
-            <h1 className="text-xl font-bold tracking-tight text-white">
-              ViralGen AI
-            </h1>
+      <div className="h-16 border-b border-slate-800 bg-slate-900">
+        <div className="flex h-full items-center justify-between px-4">
+          {/* Left Side */}
 
-            <p className="text-sm text-slate-400">Marketing Studio</p>
+          <div className="flex items-center gap-3">
+            <button className="rounded-lg p-2 transition-colors hover:bg-slate-800">
+              <Menu size={20} className="text-slate-300" />
+            </button>
+
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-purple-500 to-violet-600">
+              <span className="text-lg font-bold text-white">V</span>
+            </div>
+
+            <div>
+              <h1 className="text-base font-semibold text-white">
+                ViralGen AI
+              </h1>
+
+              <p className="text-xs text-slate-400">Marketing Studio</p>
+            </div>
           </div>
         </div>
       </div>
@@ -39,9 +57,13 @@ export default function Sidebar() {
           <Plus size={18} />
           New Campaign
         </Link>
+        <button>
+          <Search size={18} />
+          Search Campaign
+        </button>
       </nav>
 
-      {/* Bottom */}
+      {/* Footer */}
       <div className="p-4 border-t border-slate-800">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center text-white font-semibold">

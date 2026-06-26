@@ -15,12 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="h-screen overflow-hidden bg-slate-950">
-        <div className="flex flex-col h-full">
-          <Navbar />
-          <main className="flex-1 overflow-hidden">{children}</main>
-        </div>
-      </body>
+      <body className="bg-slate-950">{children}</body>
     </html>
   );
 }

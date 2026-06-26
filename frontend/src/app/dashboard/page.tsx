@@ -6,7 +6,18 @@ import { useAppStore } from "@/store/appStore.ts";
 import { Button } from "@/components/Button.tsx";
 import { FormTextarea } from "@/components/FormInput.tsx";
 import { SelectorGroup } from "@/components/SelectorGroup.tsx";
-import Sidebar from "@/components/sidebar.tsx";
+
+import React from "react";
+import { SummaryCard } from "@/components/SummaryCard";
+
+import {
+  Smartphone,
+  Palette,
+  Images,
+  Clock,
+  Sparkles,
+  CheckCircle2,
+} from "lucide-react";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -42,9 +53,9 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="flex h-full overflow-hidden bg-slate-950 bg-slate-950bg-white dark:bg-gray-900 py-1 px-6">
-      <Sidebar />
-      <main className="flex-1 h-full overflow-y-auto px-6 py-4">
+   <div className="flex h-full overflow-hidden bg-slate-950 bg-slate-950bg-white dark:bg-gray-900 py-4 px-6">
+     
+      
         <div className="w-full max-w-screen-2xl mx-auto">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
             New Campaign
@@ -53,7 +64,7 @@ export default function Dashboard() {
             Create high-converting marketing content in seconds with AI.
           </p>
 
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-06">
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-6">
             {/* Left Side - Campaign Settings */}
             <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-5">
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
@@ -120,53 +131,62 @@ export default function Dashboard() {
               </h2>
 
               <div className="space-y-4">
-                <div className="rounded-lg border border-gray-200 dark:border-gray-700 p-4">
-                  <p className="text-sm text-gray-500">Platform</p>
-                  <p className="font-medium capitalize">{platform}</p>
-                </div>
+                <SummaryCard
+                  icon={<Smartphone size={18} />}
+                  title="Platform"
+                  value={platform.charAt(0).toUpperCase() + platform.slice(1)}
+                />
 
-                <div className="rounded-lg border border-gray-200 dark:border-gray-700 p-4">
-                  <p className="text-sm text-gray-500">Persona</p>
-                  <p className="font-medium capitalize">{persona}</p>
-                </div>
+                <SummaryCard
+                  icon={<Palette size={18} />}
+                  title="Brand Persona"
+                  value={persona.charAt(0).toUpperCase() + persona.slice(1)}
+                />
 
-                <div className="rounded-lg border border-gray-200 dark:border-gray-700 p-4">
-                  <p className="text-sm text-gray-500">Variations</p>
-                  <p className="font-medium">{variations}</p>
-                </div>
+                <SummaryCard
+                  icon={<Images size={18} />}
+                  title="Assets"
+                  value={`${variations} Image${variations > 1 ? "s" : ""} • ${variations} Caption${variations > 1 ? "s" : ""}`}
+                />
 
-                <div className="rounded-lg border border-gray-200 dark:border-gray-700 p-4">
-                  <p className="text-sm text-gray-500">Estimated Assets</p>
-                  <p className="font-medium">
-                    {variations} Images • {variations} Captions
-                  </p>
-                </div>
-
-                <div className="rounded-lg border border-gray-200 dark:border-gray-700 p-4">
-                  <p className="text-sm text-gray-500">Estimated Time</p>
-                  <p className="font-medium">~15-20 seconds</p>
-                </div>
+                <SummaryCard
+                  icon={<Clock size={18} />}
+                  title="Estimated Time"
+                  value="15–20 sec"
+                />
               </div>
 
               <div className="mt-8">
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
-                  What Happens Next?
-                </h3>
+                <div className="flex items-center gap-2 mb-4">
+                  <Sparkles className="text-purple-400" size={18} />
 
-                <div className="space-y-3 text-sm">
-                  <div>✓ Prompt Enhancement</div>
+                  <h3 className="font-semibold text-white">
+                    What Happens Next?
+                  </h3>
+                </div>
 
-                  <div>✓ Marketing Copy Generation</div>
+                <div className="space-y-3">
+                  {[
+                    "Prompt Enhancement",
+                    "Marketing Copy Generation",
+                    "AI Image Generation",
+                    "Asset Composition",
+                  ].map((step) => (
+                    <div
+                      key={step}
+                      className="flex items-center gap-3 rounded-lg bg-slate-800/40 p-3"
+                    >
+                      <CheckCircle2 size={18} className="text-green-400" />
 
-                  <div>✓ AI Image Generation</div>
-
-                  <div>✓ Asset Composition</div>
+                      <span className="text-slate-300">{step}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </main>
+      
     </div>
   );
 }
