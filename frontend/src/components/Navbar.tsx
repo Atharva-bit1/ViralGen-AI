@@ -109,7 +109,7 @@ export function Navbar() {
             <div className="absolute right-0 mt-2 w-48 rounded-xl border border-slate-700 bg-slate-900 shadow-xl z-50">
               <button
                 className="w-full px-4 py-3 text-left text-sm text-white hover:bg-slate-800"
-                onClick={() => alert("Profile page coming soon")}
+                onClick={() => router.push("/profile")}
               >
                 Profile
               </button>

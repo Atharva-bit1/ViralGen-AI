@@ -18,17 +18,23 @@ export default function AuthPage() {
   const handleSubmit = () => {
     if (isLogin) {
       login({
+        id: crypto.randomUUID(),
         name: identifier || "User",
+        username: identifier || "user",
         email: "demo@viralgen.ai",
         mobile: "9999999999",
+        avatar: "",
       });
 
       router.push("/dashboard");
     } else {
       login({
+        id: crypto.randomUUID(),
         name,
+        username: name.toLowerCase().replace(/\s+/g, ""),
         email,
         mobile,
+        avatar: "",
       });
 
       router.push("/dashboard");

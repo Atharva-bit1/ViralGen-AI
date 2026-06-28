@@ -11,19 +11,16 @@ import {
   Plus,
   Menu,
 } from "lucide-react";
+import { useAuthStore } from "@/store/authStore";
 
 type SidebarProps = {
   collapsed: boolean;
-  setCollapsed: React.Dispatch<
-    React.SetStateAction<boolean>
-  >;
+  setCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export default function Sidebar({
-  collapsed,
-  setCollapsed,
-}: SidebarProps) {
-  
+export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
+  const { user } = useAuthStore();
+
   return (
     <aside
       className={`${
@@ -73,7 +70,6 @@ export default function Sidebar({
           </div>
         </div>
       </div>
-      
 
       {/* Navigation */}
       <nav className="px-3 py-3 space-y-2">
@@ -150,14 +146,16 @@ export default function Sidebar({
           }`}
         >
           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-purple-600 font-semibold text-white">
-            A
+            {user?.name?.charAt(0).toUpperCase() || "U"}
           </div>
 
           {!collapsed && (
             <div>
-              <p className="text-sm font-medium text-white">Atharva</p>
+              <p className="font-medium text-white">{user?.name || "User"}</p>
 
-              <p className="text-xs text-slate-400">Developer</p>
+              <p className="text-sm text-slate-400">
+                @{user?.username || "username"}
+              </p>
             </div>
           )}
         </div>
