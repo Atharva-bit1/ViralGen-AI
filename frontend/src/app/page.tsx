@@ -1,11 +1,24 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Sparkles, Image, Users, History } from "lucide-react";
 import { Button } from "@/components/Button";
 import { FeatureCard } from "@/components/FeatureCard";
+import { useAuthStore } from "@/store/authStore";
 
 export default function Home() {
+  const router = useRouter();
+
+  const { isLoggedIn } = useAuthStore();
+
+  const handleGenerateCampaign = () => {
+    if (isLoggedIn) {
+      router.push("/dashboard");
+    } else {
+      router.push("/auth");
+    }
+  };
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
       {/* Hero Section */}
@@ -28,11 +41,9 @@ export default function Home() {
           creators, and brands.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link href="/dashboard">
-            <Button size="lg" className="px-8">
-              Generate Campaign
-            </Button>
-          </Link>
+          <Button size="lg" className="px-8" onClick={handleGenerateCampaign}>
+            Generate Campaign
+          </Button>
 
           <button className="px-8 py-3 rounded-lg border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition">
             View Demo
@@ -99,11 +110,9 @@ export default function Home() {
             Join thousands of creators already using ViralGen to 10x their
             social media presence
           </p>
-          <Link href="/dashboard">
-            <Button size="lg" className="px-8">
-              Get started free
-            </Button>
-          </Link>
+          <Button size="lg" className="px-8" onClick={handleGenerateCampaign}>
+            Get started free
+          </Button>
         </div>
       </section>
     </div>

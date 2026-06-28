@@ -6,6 +6,8 @@ import { useAppStore } from "@/store/appStore.ts";
 import { Button } from "@/components/Button.tsx";
 import { FormTextarea } from "@/components/FormInput.tsx";
 import { SelectorGroup } from "@/components/SelectorGroup.tsx";
+import { useAuthStore } from "@/store/authStore";
+import { useEffect } from "react";
 
 import React from "react";
 import { SummaryCard } from "@/components/SummaryCard";
@@ -21,6 +23,15 @@ import {
 
 export default function Dashboard() {
   const router = useRouter();
+
+  const { isLoggedIn } = useAuthStore();
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      router.replace("/auth");
+    }
+  }, [isLoggedIn, router]);
+  
   const {
     prompt,
     setPrompt,
@@ -51,7 +62,9 @@ export default function Dashboard() {
       router.push("/status");
     }, 500);
   };
-
+  if (!isLoggedIn) {
+    return null;
+  }
   return (
     <div className="flex gap-6 p-6 bg-slate-900 bg-slate-900bg-white dark:bg-gray-900 py-4 px-6">
       <div className="w-full max-w-screen-2xl mx-auto">
