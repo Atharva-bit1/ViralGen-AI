@@ -7,6 +7,7 @@ import { useAppStore } from "@/store/appStore";
 import { useState, useEffect } from "react";
 import { Bell } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
+import NotificationDropdown from "./NotificationDropdown";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -16,6 +17,7 @@ export function Navbar() {
   const { isDark, setIsDark } = useAppStore();
   const [mounted, setMounted] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -82,9 +84,20 @@ export function Navbar() {
 
         {/* Notification */}
 
-        <button className="relative flex h-10 w-10 items-center justify-center rounded-xl border border-slate-700 hover:bg-slate-800 transition-colors">
-          <Bell size={18} className="text-slate-300" />
-        </button>
+        <div className="relative">
+          <button
+            onClick={() => setShowNotifications(!showNotifications)}
+            className="relative rounded-xl border border-slate-700 p-3 hover:bg-slate-800"
+          >
+            <Bell size={20} />
+
+            <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-purple-600 text-xs text-white">
+              3
+            </span>
+          </button>
+
+          {showNotifications && <NotificationDropdown />}
+        </div>
 
         {/* User */}
 
@@ -94,12 +107,12 @@ export function Navbar() {
             className="flex items-center gap-3 rounded-xl border border-slate-700 px-3 py-2 hover:bg-slate-800 transition-colors"
           >
             <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-violet-600 font-semibold text-white">
-              {user?.name?.charAt(0).toUpperCase() || "U"}
+              {mounted ? user?.name?.charAt(0).toUpperCase() || "U" : "U"}
             </div>
 
             <div className="text-left">
               <p className="text-sm font-medium text-white">
-                {user?.name || "User"}
+                {mounted ? user?.name || "User" : "User"}
               </p>
 
               <p className="text-xs text-slate-400">Member</p>

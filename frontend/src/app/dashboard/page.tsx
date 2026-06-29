@@ -20,6 +20,9 @@ import {
   Sparkles,
   CheckCircle2,
 } from "lucide-react";
+import CampaignDrawer from "@/components/CampaignDrawer";
+
+
 
 export default function Dashboard() {
   const router = useRouter();
@@ -31,7 +34,7 @@ export default function Dashboard() {
       router.replace("/auth");
     }
   }, [isLoggedIn, router]);
-  
+
   const {
     prompt,
     setPrompt,
@@ -45,6 +48,7 @@ export default function Dashboard() {
   } = useAppStore();
 
   const [isLoading, setIsLoading] = useState(false);
+  
 
   const handleGenerate = async () => {
     if (!prompt.trim()) {
@@ -65,6 +69,37 @@ export default function Dashboard() {
   if (!isLoggedIn) {
     return null;
   }
+
+  const mockCampaigns = [
+    {
+      id: "1",
+      name: "Nike Shoes",
+      prompt:
+        "Create a premium Instagram advertisement for Nike running shoes.",
+      persona: "Professional",
+      platform: "Instagram",
+      date: "20 June 2026",
+      image: "https://picsum.photos/600/600?random=1",
+    },
+    {
+      id: "2",
+      name: "Protein Shake",
+      prompt: "Create a Facebook campaign for a protein shake.",
+      persona: "Witty",
+      platform: "Facebook",
+      date: "18 June 2026",
+      image: "https://picsum.photos/600/600?random=2",
+    },
+    {
+      id: "3",
+      name: "Laptop Sale",
+      prompt: "LinkedIn campaign for premium laptops.",
+      persona: "Professional",
+      platform: "LinkedIn",
+      date: "15 June 2026",
+      image: "https://picsum.photos/600/600?random=3",
+    },
+  ];
   return (
     <div className="flex gap-6 p-6 bg-slate-900 bg-slate-900bg-white dark:bg-gray-900 py-4 px-6">
       <div className="w-full max-w-screen-2xl mx-auto">

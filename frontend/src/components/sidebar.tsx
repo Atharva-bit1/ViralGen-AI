@@ -12,7 +12,7 @@ import {
   Menu,
 } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
-
+import { useEffect, useState } from "react";
 type SidebarProps = {
   collapsed: boolean;
   setCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,6 +20,16 @@ type SidebarProps = {
 
 export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
   const { user } = useAuthStore();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  const recentCampaigns = [
+    { id: "1", name: "Nike Shoes" },
+    { id: "2", name: "Summer Sale" },
+    { id: "3", name: "Protein Shake" },
+  ];
 
   return (
     <aside
@@ -113,21 +123,23 @@ export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
           </p>
 
           <div className="mt-3 space-y-1">
-            {["Nike Shoes", "Summer Sale", "Protein Shake"].map((item) => (
-              <button
-                key={item}
+            {recentCampaigns.map((campaign) => (
+              <Link
+                key={campaign.id}
+                href={`/campaign/${campaign.id}`}
                 className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-slate-300 transition hover:bg-slate-800"
               >
                 <History size={16} />
-                <span className="truncate">{item}</span>
-              </button>
+                <span className="truncate">{campaign.name}</span>
+              </Link>
             ))}
           </div>
         </>
       )}
       <div className="my-5 border-t border-slate-800" />
       <div className="px-3 pb-3">
-        <button
+        <Link
+          href="/settings"
           className={`flex w-full items-center rounded-xl px-3 py-3 transition hover:bg-slate-800 ${
             collapsed ? "justify-center" : "gap-3"
           }`}
@@ -135,7 +147,7 @@ export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
           <Settings size={18} className="text-slate-300" />
 
           {!collapsed && <span className="text-slate-300">Settings</span>}
-        </button>
+        </Link>
       </div>
 
       {/* Footer */}
@@ -146,15 +158,17 @@ export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
           }`}
         >
           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-purple-600 font-semibold text-white">
-            {user?.name?.charAt(0).toUpperCase() || "U"}
+            {mounted ? user?.name?.charAt(0).toUpperCase() || "U" : "U"}
           </div>
 
           {!collapsed && (
             <div>
-              <p className="font-medium text-white">{user?.name || "User"}</p>
+              <p className="font-medium text-white">
+                {mounted ? user?.name || "User" : "User"}
+              </p>
 
               <p className="text-sm text-slate-400">
-                @{user?.username || "username"}
+                {mounted ? `@${user?.username || "username"}` : "@username"}
               </p>
             </div>
           )}
