@@ -1,10 +1,13 @@
-from datetime import datetime
+from fastapi import APIRouter
+from app.schemas.auth import LoginRequest
+from app.services.auth_service import login_user_service
 
-from fastapi import APIRouter, HTTPException
-
-from app.database.collections import users_collection
 from app.schemas.auth import RegisterRequest
-from app.utils.hashing import hash_password
+from app.services.auth_service import register_user_service
+
+from fastapi import Depends
+
+from app.dependencies.auth import get_current_user
 
 router = APIRouter(
     prefix="/auth",
@@ -14,53 +17,18 @@ router = APIRouter(
 
 @router.post("/register")
 async def register_user(user: RegisterRequest):
-
-    users = users_collection()
-
-    # Check if email already exists
-    existing_email = await users.find_one({"email": user.email})
-
-    if existing_email:
-        raise HTTPException(
-            status_code=400,
-            detail="Email already registered",
-        )
-
-    # Check if username already exists
-    existing_username = await users.find_one(
-        {"username": user.username}
-    )
-
-    if existing_username:
-        raise HTTPException(
-            status_code=400,
-            detail="Username already exists",
-        )
-
-    # Check if mobile already exists
-    existing_mobile = await users.find_one(
-        {"mobile": user.mobile}
-    )
-
-    if existing_mobile:
-        raise HTTPException(
-            status_code=400,
-            detail="Mobile number already registered",
-        )
-
-    new_user = {
-        "name": user.name,
-        "username": user.username,
-        "email": user.email,
-        "mobile": user.mobile,
-        "password": hash_password(user.password),
-        "avatar": None,
-        "created_at": datetime.utcnow(),
-    }
-
-    result = await users.insert_one(new_user)
-
+    return await register_user_service(user)
+@router.post("/login")
+async def login_user(login_data: LoginRequest):
+    return await login_user_service(login_data)
+@router.get("/me")
+async def get_profile(
+    current_user=Depends(get_current_user),
+):
     return {
-        "message": "User registered successfully",
-        "user_id": str(result.inserted_id),
+        "id": str(current_user["_id"]),
+        "name": current_user["name"],
+        "username": current_user["username"],
+        "email": current_user["email"],
+        "mobile": current_user["mobile"],
     }

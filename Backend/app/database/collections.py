@@ -15,3 +15,9 @@ def generated_assets_collection():
 
 def notifications_collection():
     return mongodb.database["notifications"]
+
+def campaigns_collection():
+    return mongodb.database["campaigns"]
+
+def settings_collection():
+    return mongodb.database["settings"]
